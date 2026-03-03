@@ -1,4 +1,4 @@
-{% render 'partials/head.liquid', title: 'VDLE' %}
+{% render 'partials/head.liquid', title: 'Van der Linden Elektrotechniek, Leverancier Jieldé lampen' %}
 
 <main>
     <h2>VDLE index h2</h2>
@@ -16,6 +16,19 @@
                 </a>
                 </li>
         {% endfor %}
+        </ul>
+        <ul>
+            <li>
+               <form method="GET" action="">
+      <select name="sort" onchange="this.form.submit()">
+        <option value="">Sorteer op...</option>
+        <option value="base_price" {% if query.sort == 'base_price' %}selected{% endif %}>Goedkoopst</option>
+        <option value="-base_price" {% if query.sort == '-base_price' %}selected{% endif %}>Duurst</option>
+        <option value="name" {% if query.sort == 'name' %}selected{% endif %}>A-Z</option>
+        <option value="-name" {% if query.sort == '-name' %}selected{% endif %}>Z-A</option>
+      </select>
+    </form>
+            </li>
         </ul>
     </nav>
 

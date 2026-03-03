@@ -25,34 +25,41 @@ app.set('views', './views')
 
 // Maak een GET route voor de index (meestal doe je dit in de root, als /)
 app.get('/', async function (request, response) {
+  const sort = request.query.sort || ''
 
-  const lampsResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_lamps')
+  // Haal de lampen op met de sorteer-parameter
+  const lampsResponse = await fetch(`https://fdnd-agency.directus.app/items/vdle_lamps?sort=${sort}`)
+  const lampsJSON = await lampsResponse.json()
+
+  // Haal categorieën op voor het menu
+  const categoriesResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_categories?sort=sort')
+  const categoriesJSON = await categoriesResponse.json()
+
+  response.render('index.liquid', { 
+    items: lampsJSON.data, 
+    categories: categoriesJSON.data,
+    query: request.query 
+  })
+})
+
+app.get('/categorie/:id', async function (request, response) {
+  const categoryId = request.params.id
+  const sort = request.query.sort || ''
+
+  // Filter op categorie ÉN sorteer
+  const lampsResponse = await fetch(
+    `https://fdnd-agency.directus.app/items/vdle_lamps?filter[category][_eq]=${categoryId}&sort=${sort}`
+  )
   const lampsJSON = await lampsResponse.json()
 
   const categoriesResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_categories?sort=sort')
   const categoriesJSON = await categoriesResponse.json()
 
   response.render('index.liquid', { 
-    items: lampsJSON.data,
-    categories: categoriesJSON.data
+    items: lampsJSON.data, 
+    categories: categoriesJSON.data,
+    query: request.query 
   })
-})
-
-app.get('/categorie/:id', async function (request, response) {
-
-  const categoryId = request.params.id
-
-  const lampsResponse = await fetch(
-    `https://fdnd-agency.directus.app/items/vdle_lamps?filter[category][_eq]=${categoryId}`
-  )
-  const categoriesResponse = await fetch(
-    'https://fdnd-agency.directus.app/items/vdle_categories?sort=sort')
-  
-  const categoriesJSON = await categoriesResponse.json()
-
-  const lampsJSON = await lampsResponse.json()
-
-  response.render('index.liquid', {items: lampsJSON.data, categories: categoriesJSON.data})
 })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
