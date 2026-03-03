@@ -1,1 +1,11 @@
-Succes!
+{% render 'partials/head.liquid', title: 'VDLE' %}
+
+<h2>VDLE index h2</h2>
+
+<ul>
+    {% for item in items %}
+        <li>{{ item.name }}<li>
+    {% endfor %}
+</ul>
+
+{% render 'partials/foot.liquid'%}
