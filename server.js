@@ -5,13 +5,6 @@ import express from 'express'
 // Importeer de Liquid package (ook als dependency via npm geïnstalleerd)
 import { Liquid } from 'liquidjs';
 
-
-
-
-// Controleer eventueel de data in je console
-// (Let op: dit is _niet_ de console van je browser, maar van NodeJS, in je terminal)
-
-
 // Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
 
@@ -33,16 +26,33 @@ app.set('views', './views')
 // Maak een GET route voor de index (meestal doe je dit in de root, als /)
 app.get('/', async function (request, response) {
 
-  // Doe een fetch naar de data die je nodig hebt
-  const apiResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_lamps')
+  const lampsResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_lamps')
+  const lampsJSON = await lampsResponse.json()
 
-  // Lees van de response van die fetch het JSON object in, waar we iets mee kunnen doen
-  const apiResponseJSON = await apiResponse.json()
+  const categoriesResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_categories?sort=sort')
+  const categoriesJSON = await categoriesResponse.json()
 
-   // Render index.liquid uit de Views map
-   // Geef hier eventueel data aan mee
-   response.render('index.liquid', {items: apiResponseJSON.data})
+  response.render('index.liquid', { 
+    items: lampsJSON.data,
+    categories: categoriesJSON.data
+  })
+})
 
+app.get('/categorie/:id', async function (request, response) {
+
+  const categoryId = request.params.id
+
+  const lampsResponse = await fetch(
+    `https://fdnd-agency.directus.app/items/vdle_lamps?filter[category][_eq]=${categoryId}`
+  )
+  const categoriesResponse = await fetch(
+    'https://fdnd-agency.directus.app/items/vdle_categories?sort=sort')
+  
+  const categoriesJSON = await categoriesResponse.json()
+
+  const lampsJSON = await lampsResponse.json()
+
+  response.render('index.liquid', {items: lampsJSON.data, categories: categoriesJSON.data})
 })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen

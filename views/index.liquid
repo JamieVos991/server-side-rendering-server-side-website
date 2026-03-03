@@ -1,11 +1,30 @@
 {% render 'partials/head.liquid', title: 'VDLE' %}
 
-<h2>VDLE index h2</h2>
+<main>
+    <h2>VDLE index h2</h2>
 
-<ul>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Alle producten</a>
+             </li>
+
+          {% for category in categories %}
+                <li>
+                <a href="/categorie/{{ category.id }}">
+                    {{ category.name }}
+                </a>
+                </li>
+        {% endfor %}
+        </ul>
+    </nav>
+
     {% for item in items %}
-        <li>{{ item.name }}<li>
+        <article>
+            <h3>{{ item.name }}</h3>
+            <p>€ {{ item.base_price }}</p>
+        </article>
     {% endfor %}
-</ul>
+</main>
 
 {% render 'partials/foot.liquid'%}
