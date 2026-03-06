@@ -20,13 +20,13 @@
         <ul>
             <li>
                <form method="GET" action="">
-                <select name="sort" onchange="this.form.submit()">
-                    <option value="">Sorteer op...</option>
-                    <option value="base_price" {% if query.sort == 'base_price' %}selected{% endif %}>Goedkoopst</option>
-                    <option value="-base_price" {% if query.sort == '-base_price' %}selected{% endif %}>Duurst</option>
-                    <option value="name" {% if query.sort == 'name' %}selected{% endif %}>A-Z</option>
-                    <option value="-name" {% if query.sort == '-name' %}selected{% endif %}>Z-A</option>
-                </select>
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="">Sorteer op...</option>
+                        <option value="base_price" {% if query.sort == 'base_price' %}selected{% endif %}>Goedkoopst</option>
+                        <option value="-base_price" {% if query.sort == '-base_price' %}selected{% endif %}>Duurst</option>
+                        <option value="name" {% if query.sort == 'name' %}selected{% endif %}>A-Z</option>
+                        <option value="-name" {% if query.sort == '-name' %}selected{% endif %}>Z-A</option>
+                    </select>
                 </form>
             </li>
         </ul>
@@ -36,6 +36,7 @@
         <article>
             <h3>{{ item.name }}</h3>
             <p>€ {{ item.base_price }}</p>
+            <p>{{ item.description }}</p>
         </article>
     {% endfor %}
 </main>
