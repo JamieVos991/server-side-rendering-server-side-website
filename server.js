@@ -38,9 +38,30 @@ app.get('/', async function (request, response) {
   response.render('index.liquid', { 
     items: lampsJSON.data, 
     categories: categoriesJSON.data,
-    query: request.query 
+    query: request.query,
+    path: request.path
   })
 })
+
+app.get('/prodcuten', async function (request, response) {
+  const sort = request.query.sort || ''
+
+  // Haal de lampen op met de sorteer-parameter
+  const lampsResponse = await fetch(`https://fdnd-agency.directus.app/items/vdle_lamps?sort=${sort}`)
+  const lampsJSON = await lampsResponse.json()
+
+  // Haal categorieën op voor het menu
+  const categoriesResponse = await fetch('https://fdnd-agency.directus.app/items/vdle_categories?sort=sort')
+  const categoriesJSON = await categoriesResponse.json()
+
+  response.render('producten.liquid', { 
+    items: lampsJSON.data, 
+    categories: categoriesJSON.data,
+    query: request.query,
+    path: request.path
+  })
+})
+
 
 app.get('/categorie/:id', async function (request, response) {
   const categoryId = request.params.id
