@@ -1,5 +1,42 @@
 {% render 'partials/head.liquid', title: 'VDLE' %}
 
-<h2>wandlampen</h2>
+<h2>lampen</h2>
+
+  <nav>
+        <ul>
+            <li>
+                <a href="/">Alle producten</a>
+             </li>
+
+          {% for category in categories %}
+                <li>
+                <a href="/categorie/{{ category.id }}">
+                    {{ category.name }}
+                </a>
+                </li>
+        {% endfor %}
+        </ul>
+        <ul>
+            <li>
+               <form method="GET" action="">
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="">Sorteer op...</option>
+                        <option value="base_price" {% if query.sort == 'base_price' %}selected{% endif %}>Goedkoopst</option>
+                        <option value="-base_price" {% if query.sort == '-base_price' %}selected{% endif %}>Duurst</option>
+                        <option value="name" {% if query.sort == 'name' %}selected{% endif %}>A-Z</option>
+                        <option value="-name" {% if query.sort == '-name' %}selected{% endif %}>Z-A</option>
+                    </select>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    {% for item in items %}
+        <h3>
+            <a href="/product/{{ item.id }}">
+                {{ item.name }}
+            </a>
+            </h3>
+    {% endfor %}
 
 {% render 'partials/foot.liquid'%}

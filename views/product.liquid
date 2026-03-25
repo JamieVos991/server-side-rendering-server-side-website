@@ -1,0 +1,26 @@
+{% render 'partials/head.liquid', title: item.name %}
+
+<main>
+  <a href="/">← Terug</a>
+
+  <h1>{{ item.name }}</h1>
+  <p>€ {{ item.base_price }}</p>
+  <p>{{ item.description }}</p>
+
+  <section>
+   {% if item.photos.size > 0 %}
+  <img src="https://fdnd-agency.directus.app/assets/{{ item.photos[0].photo }}">
+{% endif %}
+
+<div>
+  {% for photo in item.photos %}
+    <img 
+      src="https://fdnd-agency.directus.app/assets/{{ photo.photo }}" 
+      width="100"
+    >
+  {% endfor %}
+</div>
+  </section>
+</main>
+
+{% render 'partials/foot.liquid'%}

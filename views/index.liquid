@@ -2,47 +2,8 @@
 
 <main>
     <h1>VDLE index h1</h1>
-
-    <nav>
-        <ul>
-            <li>
-                <a href="/">Alle producten</a>
-             </li>
-
-          {% for category in categories %}
-                <li>
-                <a href="/categorie/{{ category.id }}">
-                    {{ category.name }}
-                </a>
-                </li>
-        {% endfor %}
-        </ul>
-        <ul>
-            <li>
-               <form method="GET" action="">
-                    <select name="sort" onchange="this.form.submit()">
-                        <option value="">Sorteer op...</option>
-                        <option value="base_price" {% if query.sort == 'base_price' %}selected{% endif %}>Goedkoopst</option>
-                        <option value="-base_price" {% if query.sort == '-base_price' %}selected{% endif %}>Duurst</option>
-                        <option value="name" {% if query.sort == 'name' %}selected{% endif %}>A-Z</option>
-                        <option value="-name" {% if query.sort == '-name' %}selected{% endif %}>Z-A</option>
-                    </select>
-                </form>
-            </li>
-        </ul>
-    </nav>
-
-    {% for item in items %}
-        <article>
-            <h3>{{ item.name }}</h3>
-            <p>€ {{ item.base_price }}</p>
-            <p>{{ item.description }}</p>
-             {% for photo in item.photos %}
-                 <img src="https://fdnd-agency.directus.app/assets/{{ item.photos[0].photo }}">
-                {% endfor %}
-
-        </article>
-    {% endfor %}
+    <a href="/producten">producten</a>
+  
 </main>
 
 
