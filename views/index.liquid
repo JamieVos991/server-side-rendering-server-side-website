@@ -37,8 +37,13 @@
             <h3>{{ item.name }}</h3>
             <p>€ {{ item.base_price }}</p>
             <p>{{ item.description }}</p>
+             {% for photo in item.photos %}
+                 <img src="https://fdnd-agency.directus.app/assets/{{ item.photos[0].photo }}">
+                {% endfor %}
+
         </article>
     {% endfor %}
 </main>
+
 
 {% render 'partials/foot.liquid'%}

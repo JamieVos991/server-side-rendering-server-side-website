@@ -47,7 +47,7 @@ app.get('/prodcuten', async function (request, response) {
   const sort = request.query.sort || ''
 
   // Haal de lampen op met de sorteer-parameter
-  const lampsResponse = await fetch(`https://fdnd-agency.directus.app/items/vdle_lamps?sort=${sort}`)
+  const lampsResponse = await fetch(`https://fdnd-agency.directus.app/items/vdle_lamps?fields=*,photos.photo&sort=${sort}`)
   const lampsJSON = await lampsResponse.json()
 
   // Haal categorieën op voor het menu
